@@ -22,10 +22,10 @@ function pintar()
     if(amigos.length>0)
     {
         lista.innerHTML="";
-        amigos.forEach((contacto)=>
+        amigos.forEach((contacto,index)=>
         {
             let amigo=document.createElement("div");
-            amigo.innerHTML=`<p>${contacto.nombre}</p><button class="muestraDetalles"><input type="hidden" value="${contacto.telefono}" />Detalles</button><button>Eliminar</button>`;
+            amigo.innerHTML=`<p>${contacto.nombre}</p><button class="muestraDetalles"><input type="hidden" value="${contacto.telefono}" />Detalles</button><button class="eliminarContacto" indice="${index}">Eliminar</button>`;
             lista.appendChild(amigo);
         });
 
@@ -39,13 +39,30 @@ function pintar()
                  
                 
             });
+
         }
+
+        botones=document.getElementsByClassName("eliminarContacto");
+        for (let i = 0; i < botones.length; i++)
+        {
+            const element = botones[i];
+            element.addEventListener("click",()=>
+            {
+                amigos.splice(element.getAttribute("indice"),1);
+                pintar();
+                 
+                
+            });
+
     }
-    else
+     }
+
+    else 
     {
         lista.innerHTML="<h2>No tenemos amigos</h2>";
     }
 }
+
 
 
 function showDetalles(tel){
@@ -62,11 +79,8 @@ function showDetalles(tel){
  <p><span> Teléfono:</span>${amigo.telefono} </p>
  <p><span>Correo: </span> ${amigo.correo}</p>
  <button>Cerrar</button>`; 
-
- 
-
-
     detalles.classList.remove("oculto");
+    cerrar();
  }
  
 
@@ -100,3 +114,14 @@ btnguardar.addEventListener("click",(event)=>
     event.preventDefault();
     }
 })
+
+function cerrar()
+{
+    let cerrar=document.getElementById("detallesAmigo");
+    cerrar.addEventListener("click",quitar=>
+    {
+        let detalles=document.getElementById("detallesAmigo");
+        detalles.classList.add("oculto");
+    })
+}
+
